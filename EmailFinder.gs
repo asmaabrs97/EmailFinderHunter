@@ -19,7 +19,7 @@ function FindEmail(firstName, lastName, domainOrCompany) {
     return "API Key is not set.";
   }
 
-  // Determine if the input is a domain or a company name and adjust accordingly
+
   var domain = domainOrCompany.includes('.') ? domainOrCompany : domainOrCompany + ".com";
 
   var apiUrl = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(domain) +
@@ -29,7 +29,6 @@ function FindEmail(firstName, lastName, domainOrCompany) {
   var response = UrlFetchApp.fetch(apiUrl, {muteHttpExceptions: true});
   var json = JSON.parse(response.getContentText());
 
-  // Log the API URL and response for debugging
   Logger.log("API URL: " + apiUrl);
   Logger.log("API Response: " + response.getContentText());
 
