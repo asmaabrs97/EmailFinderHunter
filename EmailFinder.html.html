@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Find Emails</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    input[type="text"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      margin-top: 20px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #resultText {
+      margin-top: 20px;
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Find Emails</h1>
+  <p>Fill in the fields below to find an email. Ensure you provide accurate information for best results.</p>
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="text" id="domain" placeholder="Domain or Company Name">
+  <button onclick="findEmail()">Search</button>
+  <div id="resultText"></div>
+  <script>
+    function findEmail() {
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var domain = document.getElementById('domain').value;
+      google.script.run.withSuccessHandler(function(result) {
+        document.getElementById('resultText').innerText = result.includes("No email") ? result : 'Email found: ' + result;
+      }).withFailureHandler(function(error) {
+        document.getElementById('resultText').innerText = 'Error: ' + error;
+      }).FindEmail(firstName, lastName, domain);
+    }
+  </script>
+</body>
+</html>

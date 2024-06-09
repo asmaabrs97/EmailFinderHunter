@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Setup API Key</h1>
+  <input type="text" id="api_key" placeholder="Enter API Key">
+  <button onclick="saveApiKey()">Save API Key</button>
+  <hr>
+  <h1>Find Emails</h1>
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="text" id="domain" placeholder="Domain or Company Name">
+  <button onclick="findEmail()">Search</button>
+  <div id="resultText"></div>
+
+  <script>
+    function saveApiKey() {
+      var apiKey = document.getElementById('api_key').value;
+      google.script.run.withSuccessHandler(function(message) {
+        alert(message);
+      }).storeApiKey(apiKey);
+    }
+
+    function findEmail() {
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var domain = document.getElementById('domain').value;
+      google.script.run.withSuccessHandler(function(result) {
+        document.getElementById('resultText').innerText = result;
+      }).FindEmail(firstName, lastName, domain);
+    }
+  </script>
+</body>
+</html>
