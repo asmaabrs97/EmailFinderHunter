@@ -6,11 +6,11 @@ function instructionsSheet() {
   if (!instructionsSheet) {
     instructionsSheet = ss.insertSheet("Instructions");
   } else {
-  
+
     instructionsSheet.clear();
   }
 
-  
+
   const instructions = [
     ["Instructions pour utiliser l'add-on Email Finder"],
     ["1. Configuration de l'API Key"],
@@ -21,11 +21,10 @@ function instructionsSheet() {
     ["3. Conseils d'utilisation"],
     ["Assurez-vous que vous avez correctement entré tous les détails requis pour éviter les erreurs de recherche."],
     ["4. Support"],
-    ["Pour tout support technique, veuillez contacter support@example.com."]
+    ["Pour tout support technique, veuillez contacter asmaabourass6@gmail.com."]
   ];
 
-  
+
   instructionsSheet.getRange(1, 1, instructions.length, 1).setValues(instructions);
   instructionsSheet.autoResizeColumns(1, 1);  
 }
-
