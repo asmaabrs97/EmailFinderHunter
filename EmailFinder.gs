@@ -1,53 +1,44 @@
 /**
- * Searches for an email address using the Hunter.io API based on provided first name, last name, and a domain or company name.
- * This function is designed to be used as a custom formula within Google Sheets, allowing users to integrate email search functionality directly into their spreadsheets.
+ * Searches for an email using Hunter.io API based on first name, last name, and either a domain or a company name.
+ * Can be used as a custom formula in Google Sheets.
  *
- * @param {string} firstName - The first name of the individual whose email is being searched.
- * @param {string} lastName - The last name of the individual.
- * @param {string} domainOrCompany - Either the domain of the company or the company name.
- * @return {string} Either the email address found, or an error message explaining what went wrong.
+ * @param {string} firstName - First name.
+ * @param {string} lastName - Last name.
+ * @param {string} domainOrCompany - Either the company domain or a company name.
+ * @return {string} The email address found or an error message.
  * @customfunction
  */
 function FindEmail(firstName, lastName, domainOrCompany) {
-  // Ensure all required parameters are provided before proceeding
   if (!firstName || !lastName || !domainOrCompany) {
-    return "Please ensure all parameters are provided to conduct the email search.";
-  }
-  
-  var scriptProperties = PropertiesService.getScriptProperties();
-  var apiKey = scriptProperties.getProperty('HUNTER_API_KEY');
-  // Check if the API Key has been set
-  if (!apiKey) {
-    return "API Key is not set. Please configure your API Key.";
+    return "Please ensure all parameters are provided.";
   }
 
-  // Determine the correct domain format
+  var scriptProperties = PropertiesService.getScriptProperties();
+  var apiKey = scriptProperties.getProperty('HUNTER_API_KEY');
+  if (!apiKey) {
+    return "API Key is not set.";
+  }
+
+  // Determine if the input is a domain or a company name and adjust accordingly
   var domain = domainOrCompany.includes('.') ? domainOrCompany : domainOrCompany + ".com";
-  // Construct the API URL with proper encoding of parameters
+
   var apiUrl = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(domain) +
                '&first_name=' + encodeURIComponent(firstName) + '&last_name=' + encodeURIComponent(lastName) +
                '&api_key=' + apiKey;
 
-  // Fetch response from Hunter.io API
   var response = UrlFetchApp.fetch(apiUrl, {muteHttpExceptions: true});
   var json = JSON.parse(response.getContentText());
 
-  // Log API request details for debugging purposes
+  // Log the API URL and response for debugging
   Logger.log("API URL: " + apiUrl);
   Logger.log("API Response: " + response.getContentText());
 
-  // Check if an email was found and return the result
   if (json.data && json.data.email) {
     return json.data.email;
   } else {
-    return "No email found, or an error occurred. Please check the input details and try again.";
+    return "No email found or an error occurred.";
   }
+  function doGet(e) {
+  return HtmlService.createHtmlOutput("<h1>Bienvenue dans l'add-on Email Finder</h1><p>Cet add-on vous permet de trouver des emails.</p>");
 }
-
-/**
- * Serves an HTML welcome message for the Email Finder add-on. This function is triggered by HTTP GET requests.
- * It provides introductory information about the functionality and usage of the add-on.
- */
-function doGet(e) {
-  return HtmlService.createHtmlOutput("<h1>Welcome to the Email Finder Add-on</h1><p>This add-on allows you to find emails. Please use it responsibly and ensure your API key is set up.</p>");
 }

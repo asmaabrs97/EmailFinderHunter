@@ -44,17 +44,13 @@
 </head>
 <body>
   <h1>Find Emails</h1>
-  <p>Please fill in the fields below to search for an email.</p>
+  <p>Fill in the fields below to find an email. Ensure you provide accurate information for best results.</p>
   <input type="text" id="firstName" placeholder="First Name">
   <input type="text" id="lastName" placeholder="Last Name">
   <input type="text" id="domain" placeholder="Domain or Company Name">
   <button onclick="findEmail()">Search</button>
   <div id="resultText"></div>
   <script>
-    /**
-     * Initiates an email search when the user clicks the search button.
-     * This function collects inputs from the user and calls the Google Apps Script function to find an email.
-     */
     function findEmail() {
       var firstName = document.getElementById('firstName').value;
       var lastName = document.getElementById('lastName').value;

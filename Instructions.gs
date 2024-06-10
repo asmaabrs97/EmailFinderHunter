@@ -21,7 +21,7 @@ function instructionsSheet() {
     ["3. Conseils d'utilisation"],
     ["Assurez-vous que vous avez correctement entré tous les détails requis pour éviter les erreurs de recherche."],
     ["4. Support"],
-    ["Pour tout support technique, veuillez contacter asmaabourass6@gmail.com."]
+    ["Pour tout support technique, veuillez contacter asmaabourass6@gmail.com"]
   ];
 
 
